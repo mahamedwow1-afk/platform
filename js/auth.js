@@ -2,44 +2,75 @@
 // Authentication & Page Protection System (auth.js)
 // ==========================================
 (function() {
-    const path = window.location.pathname;
+    const path = window.location.pathname.toLowerCase();
     const isLoginPage = path.endsWith("login.html") || path.includes("login.html");
+    const isRegisterPage = path.endsWith("register.html") || path.includes("register.html");
+    const isFreePage = isLoginPage || isRegisterPage;
 
-    if (!isLoginPage) {
-        const activeUser = localStorage.getItem("active_user") || localStorage.getItem("esentry_active_user");
-        let isLoggedIn = false;
+    // دالة واضحة لتنظيف وتفريغ الـ localStorage تماماً وإجبار المتصفح على إعادة التوجيه الفوري
+    function clearAuthAndRedirect() {
+        localStorage.removeItem("active_user");
+        localStorage.removeItem("esentry_active_user");
+        localStorage.removeItem("esentry_role");
+        localStorage.removeItem("esentry_user_role");
+        localStorage.removeItem("esentry_stats");
+        localStorage.setItem("isLoggedIn", "false");
+        
+        // إعادة التوجيه الفوري باستخدام replace لضمان عدم الرجوع للخلف لصفحة محمية
+        window.location.replace("login.html");
+    }
+
+    if (!isFreePage) {
+        // طبقة تحقق إضافية تتحقق من أن الرابط الحالي ليس login.html أو register.html
+        // وأن localStorage.getItem('isLoggedIn') === 'true' والصلاحيات سليمة
+        const isLoggedInFlag = localStorage.getItem("isLoggedIn") === "true";
+        const userRole = (localStorage.getItem("esentry_role") || localStorage.getItem("esentry_user_role") || "").trim();
+        const activeUser = (localStorage.getItem("active_user") || localStorage.getItem("esentry_active_user") || "").trim();
+
+        let hasValidRole = (userRole === "admin" || userRole === "student");
+        let hasValidStats = false;
 
         if (activeUser) {
-            isLoggedIn = true;
             try {
                 const statsKey = `esentry_stats_${activeUser}`;
                 const rawStats = localStorage.getItem(statsKey) || localStorage.getItem("esentry_stats");
                 if (rawStats) {
                     const stats = JSON.parse(rawStats);
-                    if (stats.isLoggedIn === false) {
-                        isLoggedIn = false;
+                    if (stats.isLoggedIn === true) {
+                        hasValidStats = true;
                     }
                 }
-            } catch (e) {
-                // ignore
-            }
+            } catch (e) {}
         } else {
             try {
                 const rawStats = localStorage.getItem("esentry_stats");
                 if (rawStats) {
                     const stats = JSON.parse(rawStats);
-                    if (stats.isLoggedIn === true) {
-                        isLoggedIn = true;
+                    if (stats.isLoggedIn === true && (stats.email || stats.role)) {
+                        hasValidStats = true;
                     }
                 }
             } catch (e) {}
         }
 
-        if (!isLoggedIn) {
-            window.location.href = "login.html";
+        // شرط صريح لا يقبل الشك: إذا لم يكن مسجلاً الدخول (isLoggedIn !== true) أو لا تتوفر الصلاحيات الصحيحة
+        if (!isLoggedInFlag || (!hasValidRole && !hasValidStats)) {
+            clearAuthAndRedirect();
+            return;
         }
     }
 })();
+
+// دالة عامة لتسجيل الخروج وتفريغ البيانات وإعادة التوجيه الفوري
+function handleLogout() {
+    localStorage.removeItem("active_user");
+    localStorage.removeItem("esentry_active_user");
+    localStorage.removeItem("esentry_role");
+    localStorage.removeItem("esentry_user_role");
+    localStorage.removeItem("esentry_stats");
+    localStorage.setItem("isLoggedIn", "false");
+    window.location.replace("login.html");
+}
 
 let selectedAvatarUrl = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop";
 
@@ -47,6 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const authBox = document.getElementById("auth-box");
     if (!authBox) return;
     renderAuthInterface();
+    const path = window.location.pathname;
+    if (path.endsWith("register.html") || path.includes("register.html")) {
+        switchAuthTab('register');
+    }
 });
 
 function renderAuthInterface() {
@@ -132,6 +167,7 @@ function handleAdminLoginSubmit(e) {
     if (pass === "admin123" || pass === "esentry_admin") {
         localStorage.setItem("esentry_role", "admin");
         localStorage.setItem("esentry_user_role", "admin");
+        localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("active_user", "admin@esentry.edu");
         try {
             const stats = { name: "مشرف النظام", email: "admin@esentry.edu", role: "admin", isLoggedIn: true };
@@ -299,6 +335,7 @@ function handleLoginSubmit(e) {
 
     localStorage.setItem("esentry_role", "student");
     localStorage.setItem("esentry_user_role", "student");
+    localStorage.setItem("isLoggedIn", "true");
     ES_Storage.setActiveUser(email);
     if (typeof seedUserIfMissing === "function") {
         seedUserIfMissing(email);
@@ -332,6 +369,7 @@ function handleRegisterSubmit(e) {
 
     localStorage.setItem("esentry_role", "student");
     localStorage.setItem("esentry_user_role", "student");
+    localStorage.setItem("isLoggedIn", "true");
     ES_Storage.setActiveUser(email);
     if (typeof seedUserIfMissing === "function") {
         seedUserIfMissing(email);

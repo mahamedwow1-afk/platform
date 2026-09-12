@@ -285,5 +285,7 @@ function handleAdminLogout() {
     localStorage.removeItem("esentry_role");
     localStorage.removeItem("esentry_user_role");
     localStorage.removeItem("active_user");
-    window.location.href = "login.html";
+    localStorage.removeItem("esentry_stats");
+    localStorage.setItem("isLoggedIn", "false");
+    window.location.replace("login.html");
 }
