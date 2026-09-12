@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Sentry | لوحة التحكم</title>
+    <script src="js/auth.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-[#010308] sci-fi-grid text-slate-100 min-h-screen flex flex-col antialiased relative selection:bg-cyan-500 selection:text-slate-950">
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden md:hidden"></div>
+
+    <div class="flex-1 flex flex-row min-h-screen">
+        <aside id="sidebar" class="fixed md:static inset-y-0 right-0 z-50 w-64 bg-slate-900/95 border-l border-slate-800/80 flex flex-col justify-between transition-transform duration-300 transform translate-x-full md:translate-x-0"></aside>
+
+        <main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+            <header class="h-16 bg-slate-900/60 backdrop-blur-md border-b border-slate-800/80 px-6 flex items-center justify-between sticky top-0 z-30">
+                <div class="flex items-center gap-3">
+                    <button type="button" id="sidebar-toggle" class="md:hidden w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center text-slate-300">
+                        <i class="fas fa-bars text-sm"></i>
+                    </button>
+                    <h1 class="text-base font-bold text-slate-100">لوحة الإحصائيات والمتابعة</h1>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <button type="button" id="notif-trigger" class="w-9 h-9 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-center text-slate-300 hover:text-emerald-400 relative">
+                            <i class="far fa-bell text-sm"></i>
+                            <span id="notif-badge" class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 text-[9px] font-bold text-slate-950 flex items-center justify-center border-2 border-slate-900 hidden">0</span>
+                        </button>
+                        <div id="notif-dropdown" class="absolute left-0 mt-2 w-80 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl z-50 hidden overflow-hidden">
+                            <div class="p-3 border-b border-slate-800 flex items-center justify-between">
+                                <span class="text-xs font-bold text-slate-200">الإشعارات</span>
+                                <button type="button" id="mark-all-read" class="text-[10px] text-emerald-400 hover:underline">تحديد كمقروء</button>
+                            </div>
+                            <div id="notif-list" class="max-h-64 overflow-y-auto"></div>
+                        </div>
+                    </div>
+                    <a href="lessons.html" class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 text-xs font-bold text-white shadow-lg shadow-emerald-500/20">
+                        <i class="fas fa-circle-play text-xs"></i>
+                        <span>متابعة الحصة</span>
+                    </a>
+                </div>
+            </header>
+
+            <div id="dashboard-root" class="p-6 max-w-7xl w-full mx-auto space-y-6">
+                <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-slate-950 p-6 border border-slate-800/80 shadow-xl">
+                    <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold border border-emerald-500/30">حساب نشط ومحمي</span>
+                                <span id="dashboard-student-rank" class="text-xs text-amber-400 font-bold">متميز</span>
+                            </div>
+                            <h2 class="text-xl md:text-2xl font-black text-slate-100">
+                                أهلا بك مجددا، <span id="dashboard-student-name" class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">أحمد</span>
+                            </h2>
+                            <p id="dashboard-student-level" class="text-xs text-slate-400 mt-1">المستوى الثالث - علوم الحاسب وأمن المعلومات</p>
+                        </div>
+                        <a href="lessons.html" class="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs shadow-lg shadow-emerald-500/20 flex items-center gap-2 w-fit">
+                            <i class="fas fa-play text-xs"></i>
+                            بدء الدرس التالي
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-5 border border-slate-800">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-medium text-slate-400">الحصص المكتملة</span>
+                            <div class="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+                                <i class="fas fa-circle-check text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-baseline gap-2 mb-2">
+                            <span id="stat-completed-lessons" class="text-2xl font-black text-slate-100">0</span>
+                            <span class="text-xs text-slate-500">/ <span id="stat-total-lessons">0</span> حصة</span>
+                            <span id="stat-lesson-percent" class="text-xs font-bold text-emerald-400 mr-auto">0%</span>
+                        </div>
+                        <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                            <div id="stat-lesson-bar" class="bg-emerald-500 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-5 border border-slate-800">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-medium text-slate-400">المعدل العام</span>
+                            <div class="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+                                <i class="fas fa-award text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-baseline gap-2 mb-2">
+                            <span id="stat-average-grade" class="text-2xl font-black text-slate-100">0%</span>
+                            <span id="stat-grade-badge" class="text-[10px] px-2 py-0.5 rounded-full mr-auto"></span>
+                        </div>
+                        <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                            <div id="stat-grade-bar" class="bg-cyan-400 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-5 border border-slate-800">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-medium text-slate-400">الواجبات المعلقة</span>
+                            <div class="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+                                <i class="fas fa-clipboard-list text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-baseline gap-2 mb-2">
+                            <span id="stat-pending-assignments" class="text-2xl font-black text-slate-100">0</span>
+                            <span class="text-xs text-amber-400">مهام تحتاج تسليم</span>
+                        </div>
+                        <p class="text-[10px] text-slate-500 mt-2">قم بإنهاء المهام لرفع معدلك العام</p>
+                    </div>
+
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-5 border border-slate-800">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-medium text-slate-400">ساعات التعلم</span>
+                            <div class="w-9 h-9 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+                                <i class="fas fa-stopwatch text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-baseline gap-2 mb-2">
+                            <span id="stat-study-hours" class="text-2xl font-black text-slate-100">0 س</span>
+                            <span class="text-xs text-emerald-400">سجل تفاعلي</span>
+                        </div>
+                        <p class="text-[10px] text-slate-500 mt-2">سجل دراسي تفاعلي مستمر</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                    <section class="xl:col-span-2">
+                        <h3 class="text-sm font-bold text-slate-200 mb-3">تقدم الوحدات الدراسية</h3>
+                        <div id="course-units-container"></div>
+                    </section>
+                    <section>
+                        <h3 class="text-sm font-bold text-slate-200 mb-3">الواجبات المعلقة</h3>
+                        <div id="pending-tasks-list" class="space-y-2"></div>
+                    </section>
+                </div>
+
+                <section class="glass-panel rounded-2xl p-6 border border-slate-800">
+                    <h3 class="text-sm font-bold text-slate-200 mb-4">تحليلات الأداء الأسبوعي ونسب الاستيعاب</h3>
+                    <div class="h-64 w-full relative">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                </section>
+                <section>
+                    <h3 class="text-sm font-bold text-slate-200 mb-3">الاختبارات المتاحة</h3>
+                    <div id="dashboard-exams-container"></div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            UI.renderSidebar("index.html");
+            initSidebar();
+            initHeaderProfile();
+        });
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("sw.js").catch(() => {});
+        }
+    </script>
+</body>
+</html>

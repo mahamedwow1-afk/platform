@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Sentry | الحصص والمحاضرات</title>
+    <script src="js/auth.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-[#010308] sci-fi-grid text-slate-100 min-h-screen flex flex-col antialiased relative selection:bg-cyan-500 selection:text-slate-950">
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden md:hidden"></div>
+    <div class="flex-1 flex flex-row min-h-screen">
+        <aside id="sidebar" class="fixed md:static inset-y-0 right-0 z-50 w-64 bg-slate-900/95 border-l border-slate-800/80 flex flex-col justify-between transition-transform duration-300 transform translate-x-full md:translate-x-0"></aside>
+        <main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+            <header class="h-16 bg-slate-900/60 backdrop-blur-md border-b border-slate-800/80 px-6 flex items-center justify-between sticky top-0 z-30">
+                <div class="flex items-center gap-3">
+                    <button type="button" id="sidebar-toggle" class="md:hidden w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center text-slate-300"><i class="fas fa-bars text-sm"></i></button>
+                    <h1 class="text-base font-bold text-slate-100">الحصص والمحاضرات</h1>
+                </div>
+                <div class="relative">
+                    <button type="button" id="notif-trigger" class="w-9 h-9 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-center text-slate-300 hover:text-emerald-400 relative">
+                        <i class="far fa-bell text-sm"></i>
+                        <span id="notif-badge" class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 text-[9px] font-bold text-slate-950 flex items-center justify-center border-2 border-slate-900 hidden">0</span>
+                    </button>
+                    <div id="notif-dropdown" class="absolute left-0 mt-2 w-80 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl z-50 hidden overflow-hidden">
+                        <div class="p-3 border-b border-slate-800 flex items-center justify-between">
+                            <span class="text-xs font-bold text-slate-200">الإشعارات</span>
+                            <button type="button" id="mark-all-read" class="text-[10px] text-emerald-400 hover:underline">تحديد كمقروء</button>
+                        </div>
+                        <div id="notif-list" class="max-h-64 overflow-y-auto"></div>
+                    </div>
+                </div>
+            </header>
+            <div id="lessons-root" class="p-6 max-w-7xl w-full mx-auto grid grid-cols-1 xl:grid-cols-3 gap-6">
+                <section class="xl:col-span-2 space-y-4">
+                    <div class="glass-panel rounded-2xl p-5 border border-slate-800">
+                        <p id="lesson-unit" class="text-xs text-emerald-400 font-bold mb-1"></p>
+                        <h2 id="lesson-title" class="text-xl font-black text-slate-100"></h2>
+                        <p id="lesson-duration" class="text-xs text-slate-500 mt-1"></p>
+                    </div>
+                    <div class="relative w-full aspect-video rounded-2xl border border-slate-800 bg-slate-900 overflow-hidden shadow-2xl">
+                        <iframe id="main-video-player" class="w-full h-full border-0 hidden" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <video id="html5-video-player" class="w-full h-full object-cover" controls poster="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1280&auto=format&fit=crop">
+                            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                            متصفحك لا يدعم تشغيل الفيديو.
+                        </video>
+                    </div>
+                    <div id="video-external-link-container" class="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 bg-slate-900/60 p-4 rounded-2xl border border-slate-800/80 gap-3">
+                        <button type="button" onclick="toggleVideoPlayerMode()" class="px-3.5 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-bold text-emerald-400 hover:bg-slate-700 transition-colors flex items-center gap-2">
+                            <i class="fas fa-video"></i>
+                            <span id="player-mode-text">التبديل إلى مشغل يوتيوب</span>
+                        </button>
+                        <a id="video-youtube-direct-link" href="#" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 hover:text-emerald-400 font-bold flex items-center gap-1.5 transition-colors">
+                            <span>المشاهدة على YouTube المباشر</span>
+                            <i class="fas fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                    <div class="glass-panel rounded-2xl p-5 border border-slate-800">
+                        <h3 class="text-sm font-bold mb-2">وصف الحصة</h3>
+                        <p id="lesson-description" class="text-sm text-slate-300 leading-relaxed"></p>
+                    </div>
+                    <div class="glass-panel rounded-2xl p-5 border border-slate-800">
+                        <h3 class="text-sm font-bold mb-2">ملاحظاتك</h3>
+                        <textarea id="lesson-notes" rows="4" class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 outline-none focus:border-emerald-500/40" placeholder="اكتب ملاحظة سريعة عن الحصة..."></textarea>
+                        <div class="flex flex-wrap gap-2 mt-3">
+                            <button type="button" onclick="saveLessonNotes()" class="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-bold">حفظ الملاحظات</button>
+                            <button type="button" id="mark-complete-btn" onclick="markLessonComplete()" class="px-4 py-2 rounded-xl bg-emerald-500 text-slate-950 text-xs font-bold">تعليم الحصة كمكتملة</button>
+                        </div>
+                    </div>
+                    <div id="lesson-quiz" class="space-y-4"></div>
+                </section>
+                <aside>
+                    <h3 class="text-sm font-bold mb-3">قائمة الحصص</h3>
+                    <div id="lessons-playlist" class="space-y-2"></div>
+                </aside>
+            </div>
+        </main>
+    </div>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/lessons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            UI.renderSidebar("lessons.html");
+            initSidebar();
+            initHeaderProfile();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Sentry | لوحة تحكم المشرف المتقدمة</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-[#010308] sci-fi-grid text-slate-100 min-h-screen antialiased relative selection:bg-cyan-500 selection:text-slate-950">
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+    <div id="admin-login" class="flex items-center justify-center min-h-screen p-4 relative z-10">
+        <form id="login-form" class="glass-panel p-8 rounded-3xl border border-slate-800 w-full max-w-md shadow-2xl space-y-6">
+            <div class="text-center">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-tr from-emerald-500 to-cyan-500 text-slate-950 font-black shadow-lg shadow-emerald-500/20 mb-3">
+                    <i class="fas fa-user-shield text-2xl"></i>
+                </div>
+                <h1 class="text-xl font-black text-slate-100">بوابة تحكم المشرف (Admin)</h1>
+                <p class="text-xs text-emerald-400 mt-1">تسجيل الدخول الإداري الآمن لنظام E-Sentry</p>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-300 mb-2">كلمة المرور الإدارية</label>
+                <div class="relative">
+                    <input type="password" id="admin-pass" placeholder="أدخل كلمة المرور (افتراضي: admin123)" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 pl-9 py-3 text-xs text-slate-100 outline-none focus:border-emerald-500">
+                    <button type="button" onclick="togglePasswordVisibility('admin-pass', 'admin-pass-icon')" class="absolute left-3.5 top-3.5 text-slate-500 hover:text-slate-300 focus:outline-none transition-colors">
+                        <i id="admin-pass-icon" class="fas fa-eye text-xs"></i>
+                    </button>
+                </div>
+            </div>
+            <button type="submit" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 rounded-xl text-slate-950 font-bold text-xs shadow-lg shadow-emerald-500/20 transition-all">
+                الدخول للوحة التحكم
+            </button>
+            <div class="text-center">
+                <a href="index.html" class="text-xs text-slate-400 hover:text-cyan-400 transition-colors">
+                    <i class="fas fa-arrow-right ml-1"></i> العودة للرئيسية
+                </a>
+            </div>
+        </form>
+    </div>
+    <div id="admin-dashboard" class="hidden min-h-screen flex flex-col relative z-10">
+        <header class="h-16 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-500 flex items-center justify-center text-slate-950 font-black">
+                    <i class="fas fa-shield-halved text-sm"></i>
+                </div>
+                <div>
+                    <h1 class="text-sm font-black text-slate-100">E-SENTRY // ADMIN CONSOLE</h1>
+                    <span class="text-[9px] text-emerald-400 font-mono">SECURE SYSTEM v2.5</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 transition-colors">
+                    <i class="fas fa-home ml-1"></i> الرئيسية
+                </a>
+                <button type="button" onclick="window.location.reload()" class="px-3.5 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-xs font-bold text-rose-400 transition-colors">
+                    <i class="fas fa-right-from-bracket ml-1"></i> خروج
+                </button>
+            </div>
+        </header>
+
+        <main class="flex-1 p-6 max-w-7xl w-full mx-auto space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-400 block mb-1">المنشورات المعلقة</span>
+                        <span id="stat-pending-posts" class="text-2xl font-black text-amber-400">0</span>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-lg">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-400 block mb-1">إجمالي المحاضرات</span>
+                        <span id="stat-total-lessons" class="text-2xl font-black text-cyan-400">0</span>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 text-lg">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-400 block mb-1">الطلاب المسجلين</span>
+                        <span id="stat-total-students" class="text-2xl font-black text-emerald-400">1</span>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-lg">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-400 block mb-1">حالة النظام</span>
+                        <span class="text-lg font-black text-emerald-400">مستقر (Secure)</span>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-lg animate-pulse">
+                        <i class="fas fa-shield-check"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-slate-800">
+                <button type="button" onclick="switchAdminTab('forum')" id="tab-btn-forum" class="px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-emerald-500 text-slate-950 shadow-md">
+                    <i class="fas fa-comments ml-1.5"></i> مراجعة المنشورات
+                </button>
+                <button type="button" onclick="switchAdminTab('lessons')" id="tab-btn-lessons" class="px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-slate-900 text-slate-400 hover:text-slate-100 border border-slate-800">
+                    <i class="fas fa-video ml-1.5"></i> إضافة وإدارة المحاضرات
+                </button>
+                <button type="button" onclick="switchAdminTab('students')" id="tab-btn-students" class="px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-slate-900 text-slate-400 hover:text-slate-100 border border-slate-800">
+                    <i class="fas fa-user-gear ml-1.5"></i> إدارة الطلاب والدرجات
+                </button>
+                <button type="button" onclick="switchAdminTab('broadcast')" id="tab-btn-broadcast" class="px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-slate-900 text-slate-400 hover:text-slate-100 border border-slate-800">
+                    <i class="fas fa-bullhorn ml-1.5"></i> بث إشعار عام للطلاب
+                </button>
+            </div>
+
+            <div id="admin-tab-forum" class="space-y-4">
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800">
+                    <h3 class="font-bold text-slate-100 mb-1 flex items-center gap-2">
+                        <i class="fas fa-comments text-emerald-400"></i>
+                        <span>المنشورات والأسئلة المعلقة بانتظار الاعتماد</span>
+                    </h3>
+                    <p class="text-xs text-slate-400 mb-6">قم بمراجعة الأسئلة والمنشورات التي طرحها الطلاب قبل نشرها في المنتدى العام.</p>
+                    <div id="forum-pending" class="space-y-3"></div>
+                </div>
+            </div>
+
+            <div id="admin-tab-lessons" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800 space-y-4">
+                    <h3 class="font-bold text-slate-100 flex items-center gap-2">
+                        <i class="fas fa-plus-circle text-emerald-400"></i>
+                        <span>إضافة محاضرة جديدة</span>
+                    </h3>
+                    <p class="text-xs text-slate-400">أضف محاضرة فيديو جديدة لتظهر مباشرة في قائمة الحصص والمحاضرات للطلاب.</p>
+                    <form id="add-lesson-form" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-2">عنوان المحاضرة</label>
+                            <input type="text" id="lesson-title" placeholder="مثال: تحليل الثغرات المتقدمة" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-100 outline-none focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-2">المحور / الوحدة</label>
+                            <input type="text" id="lesson-unit" placeholder="مثال: أساسيات الأمن السيبراني" value="أساسيات الأمن السيبراني" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-100 outline-none focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-2">رابط يوتيوب (Embed أو عادي)</label>
+                            <input type="text" id="lesson-url" placeholder="https://www.youtube.com/watch?v=..." required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-100 outline-none focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-2">مدة المحاضرة (بالدقائق)</label>
+                            <input type="number" id="lesson-duration" value="30" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-100 outline-none focus:border-emerald-500">
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl text-slate-950 text-xs font-bold shadow-lg shadow-emerald-500/20">
+                            إضافة المحاضرة للنظام
+                        </button>
+                    </form>
+                </div>
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800 space-y-4">
+                    <h3 class="font-bold text-slate-100 flex items-center gap-2">
+                        <i class="fas fa-list-check text-cyan-400"></i>
+                        <span>قائمة المحاضرات المسجلة حالياً</span>
+                    </h3>
+                    <p class="text-xs text-slate-400">استعراض المحاضرات المتاحة في المنصة.</p>
+                    <div id="admin-lessons-list" class="space-y-2 max-h-[380px] overflow-y-auto"></div>
+                </div>
+            </div>
+
+            <div id="admin-tab-students" class="hidden space-y-6">
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800 space-y-4">
+                    <h3 class="font-bold text-slate-100 flex items-center gap-2">
+                        <i class="fas fa-magnifying-glass text-cyan-400"></i>
+                        <span>البحث عن طالب برقم الهوية الأكاديمية</span>
+                    </h3>
+                    <p class="text-xs text-slate-400">ابحث عن بيانات أي طالب باستخدام الرقم التعريفي (مثل: ES-2026-001) لتعديل درجاته، معدله، أو ساعات تعلمه.</p>
+                    <div class="flex gap-2">
+                        <input type="text" id="student-search" placeholder="أدخل رقم الطالب (مثلاً: ES-2026-001)" class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-100 outline-none focus:border-cyan-500">
+                        <button id="search-btn" class="px-6 py-3 bg-gradient-to-r from-cyan-500 to-teal-600 text-slate-950 rounded-xl text-xs font-bold shadow-lg shadow-cyan-500/20">
+                            بحث
+                        </button>
+                    </div>
+                    <div id="student-result" class="mt-4"></div>
+                </div>
+            </div>
+
+            <div id="admin-tab-broadcast" class="hidden space-y-6">
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800 space-y-4 max-w-2xl mx-auto">
+                    <h3 class="font-bold text-slate-100 flex items-center gap-2">
+                        <i class="fas fa-bullhorn text-amber-400"></i>
+                        <span>إرسال إشعار / تنبيه عام لجميع طلاب المنصة</span>
+                    </h3>
+                    <p class="text-xs text-slate-400">اكتب رسالة أو تنبيهاً سيظهر في قائمة الإشعارات لدى جميع الطلاب عند دخولهم المنصة.</p>
+                    <form onsubmit="handleBroadcastSubmit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-2">عنوان التنبيه</label>
+                            <input type="text" id="broadcast-title" placeholder="مثال: تم إضافة اختبار جديد في قسم الأمن السيبراني" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-100 outline-none focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-2">نوع الأيقونة</label>
+                            <select id="broadcast-icon" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-slate-200 outline-none focus:border-amber-500">
+                                <option value="bell">تنبيه عام (Bell)</option>
+                                <option value="award">شهادة / إنجاز (Award)</option>
+                                <option value="shield">أمان وتحديث (Shield)</option>
+                                <option value="triangle-exclamation">تحذير /هام (Warning)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-600 rounded-xl text-slate-950 text-xs font-bold shadow-lg shadow-amber-500/20">
+                            بث التنبيه لجميع الطلاب الآن 🚀
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
+

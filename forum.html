@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Sentry | منتدى الأسئلة والتفاعل</title>
+    <script src="js/auth.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-[#010308] sci-fi-grid text-slate-100 min-h-screen flex flex-col antialiased relative selection:bg-cyan-500 selection:text-slate-950">
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden md:hidden"></div>
+
+    <div class="flex-1 flex flex-row min-h-screen">
+        <aside id="sidebar" class="fixed md:static inset-y-0 right-0 z-50 w-64 bg-slate-900/95 border-l border-slate-800/80 flex flex-col justify-between transition-transform duration-300 transform translate-x-full md:translate-x-0"></aside>
+
+        <main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+            <header class="h-16 bg-slate-900/60 backdrop-blur-md border-b border-slate-800/80 px-6 flex items-center justify-between sticky top-0 z-30">
+                <div class="flex items-center gap-3">
+                    <button type="button" id="sidebar-toggle" class="md:hidden w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center text-slate-300">
+                        <i class="fas fa-bars text-sm"></i>
+                    </button>
+                    <h1 class="text-base font-bold text-slate-100">منتدى النقاش والتفاعل التقني</h1>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button type="button" onclick="toggleNewQuestionForm()" class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 text-xs font-bold text-white shadow-lg shadow-emerald-500/20">
+                        <i class="fas fa-plus text-xs"></i>
+                        <span>طرح سؤال</span>
+                    </button>
+                </div>
+            </header>
+
+            <div id="forum-root" class="p-6 max-w-5xl w-full mx-auto space-y-6"></div>
+        </main>
+    </div>
+    <!-- New Question Form Modal / Overlay -->
+    <div id="new-question-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="w-full max-w-lg bg-slate-950 border border-slate-800 rounded-3xl p-6 relative shadow-2xl">
+            <button type="button" onclick="toggleNewQuestionForm()" class="absolute top-5 left-5 text-slate-400 hover:text-white">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+            <h3 class="text-lg font-black text-slate-100 mb-1">طرح سؤال تقني جديد</h3>
+            <p class="text-xs text-slate-400 mb-5">شارك سؤالك بوضوح وتفصيل ليتمكن زملاؤك والمعلمون من إعطائك الإجابة الأمثل.</p>
+            
+            <form onsubmit="handleNewQuestionSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-2">عنوان السؤال</label>
+                    <input type="text" id="new-q-title" required class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-100 outline-none focus:border-emerald-500" placeholder="مثال: كيف أمنع ثغرة الـ SQL Injection؟">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-2">القسم / التصنيف</label>
+                    <select id="new-q-category" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-slate-200 outline-none focus:border-emerald-500">
+                        <option value="الأمن السيبراني">الأمن السيبراني</option>
+                        <option value="أمن الشبكات">أمن الشبكات</option>
+                        <option value="التشفير">التشفير</option>
+                        <option value="ثغرات الويب">ثغرات الويب</option>
+                        <option value="عام">عام</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-2">تفاصيل السؤال ومحتواه</label>
+                    <textarea id="new-q-content" rows="4" required class="w-full bg-slate-900 border border-slate-800 rounded-xl p-4 text-xs text-slate-100 outline-none focus:border-emerald-500" placeholder="اكتب بالتفصيل سؤالك، والتقنيات المستخدمة، وأي تفاصيل أخرى تساعد على فهم المشكلة..."></textarea>
+                </div>
+                <div class="flex items-center justify-end gap-3 pt-2">
+                    <button type="button" onclick="toggleNewQuestionForm()" class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-300">إلغاء</button>
+                    <button type="submit" class="px-6 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 text-slate-950 font-bold text-xs shadow-lg shadow-emerald-500/20">نشر السؤال في المنتدى</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/forum.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            UI.renderSidebar("forum.html");
+            initSidebar();
+            initHeaderProfile();
+        });
+    </script>
+</body>
+</html>
