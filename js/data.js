@@ -1528,48 +1528,52 @@ function seedData() {
     const email = localStorage.getItem("active_user") || localStorage.getItem("esentry_active_user") || "mohammed@esentry.edu";
     if (!localStorage.getItem("active_user")) localStorage.setItem("active_user", email);
     if (!localStorage.getItem("esentry_active_user")) localStorage.setItem("esentry_active_user", email);
-
-    const keys = {
-        "esentry_stats": INITIAL_STATS,
-        "esentry_lessons": INITIAL_LESSONS,
-        "esentry_exams": INITIAL_EXAMS,
-        "esentry_courses": INITIAL_COURSES,
-        "esentry_units": INITIAL_UNITS,
-        "esentry_forum_posts": INITIAL_FORUM
-    };
-
-    Object.keys(keys).forEach(key => {
-        const fullKey = key + "_" + email;
-        const existing = localStorage.getItem(fullKey);
-        let needsSeed = !existing || (key === "esentry_exams" && (JSON.parse(existing || "[]").length <= 1 || JSON.parse(existing || "[]").some(e => e.totalQuestions < 30)));
-        if (needsSeed) {
-            localStorage.setItem(fullKey, JSON.stringify(keys[key]));
-        }
-    });
-
-    if (!localStorage.getItem("esentry_stats")) {
-        localStorage.setItem("esentry_stats", JSON.stringify(INITIAL_STATS));
-    }
-    const globalExams = localStorage.getItem("esentry_exams");
-    if (!globalExams || JSON.parse(globalExams || "[]").length <= 1 || JSON.parse(globalExams || "[]").some(e => e.totalQuestions < 30)) {
-        localStorage.setItem("esentry_exams", JSON.stringify(INITIAL_EXAMS));
-    }
+    seedUserIfMissing(email, false);
 }
 
-function seedUserIfMissing(email) {
+function seedUserIfMissing(email, forceClean = false) {
+    const isDefaultAdmin = (email === "mohammed@esentry.edu");
+    
+    const cleanLessons = INITIAL_LESSONS.map(l => ({ ...l, completed: isDefaultAdmin ? l.completed : false }));
+    const cleanCourses = INITIAL_COURSES.map(c => ({ ...c, progress: isDefaultAdmin ? c.progress : 0 }));
+    const cleanUnits = {};
+    Object.keys(INITIAL_UNITS).forEach(courseId => {
+        cleanUnits[courseId] = INITIAL_UNITS[courseId].map(unit => ({
+            ...unit,
+            lessons: unit.lessons.map(ls => ({ ...ls, completed: isDefaultAdmin ? ls.completed : false }))
+        }));
+    });
+
+    const defaultStats = isDefaultAdmin ? INITIAL_STATS : {
+        name: "",
+        email: email,
+        avatar: "",
+        level: "المستوى الأول",
+        rank: "مبتدئ",
+        averageGrade: 0,
+        pendingAssignments: 0,
+        studyHours: 0,
+        isLoggedIn: true,
+        studentId: "ES-2026-" + Math.floor(Math.random() * 900 + 100)
+    };
+
     const keys = {
-        "esentry_stats": Object.assign({}, INITIAL_STATS, { email: email }),
-        "esentry_lessons": INITIAL_LESSONS,
+        "esentry_stats": defaultStats,
+        "esentry_lessons": cleanLessons,
         "esentry_exams": INITIAL_EXAMS,
-        "esentry_courses": INITIAL_COURSES,
-        "esentry_units": INITIAL_UNITS,
+        "esentry_courses": cleanCourses,
+        "esentry_units": cleanUnits,
+        "esentry_exam_results": {},
+        "esentry_tasks": isDefaultAdmin ? null : [],
+        "esentry_notifications": isDefaultAdmin ? [{ id: 1, title: "مرحباً بك في منصة E-SENTRY", time: "الآن", read: false, icon: "shield" }] : [],
         "esentry_forum_posts": INITIAL_FORUM
     };
+
     Object.keys(keys).forEach(key => {
         const fullKey = key + "_" + email;
         const existing = localStorage.getItem(fullKey);
-        let needsSeed = !existing || (key === "esentry_exams" && (JSON.parse(existing || "[]").length <= 1 || JSON.parse(existing || "[]").some(e => e.totalQuestions < 30)));
-        if (needsSeed) {
+        let needsSeed = !existing || forceClean || (key === "esentry_exams" && (JSON.parse(existing || "[]").length <= 1 || JSON.parse(existing || "[]").some(e => e.totalQuestions < 30)));
+        if (needsSeed && keys[key] !== null) {
             localStorage.setItem(fullKey, JSON.stringify(keys[key]));
         }
     });
@@ -1580,7 +1584,7 @@ seedData();
 function parseOrEmpty(key, fallback) {
     try {
         const namespacedKey = getUserStorageKeyForData(key);
-        const raw = localStorage.getItem(namespacedKey) || localStorage.getItem(key);
+        const raw = localStorage.getItem(namespacedKey);
         return raw ? JSON.parse(raw) : fallback;
     } catch (err) {
         return fallback;

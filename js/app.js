@@ -4,14 +4,13 @@ window.ES_Storage = {
     getUserStorageKey(baseKey) { return `${baseKey}_${window.ES_Storage.getActiveUser()}`; },
     _parse(key, fallback) {
         try {
-            const raw = localStorage.getItem(window.ES_Storage.getUserStorageKey(key)) || localStorage.getItem(key);
+            const raw = localStorage.getItem(window.ES_Storage.getUserStorageKey(key));
             return raw ? JSON.parse(raw) : fallback;
         } catch (e) { return fallback; }
     },
     _set(key, value) {
         try {
             localStorage.setItem(window.ES_Storage.getUserStorageKey(key), JSON.stringify(value));
-            localStorage.setItem(key, JSON.stringify(value));
         } catch (e) {}
     },
     getStats: () => window.ES_Storage._parse("esentry_stats", INITIAL_STATS),
@@ -50,7 +49,7 @@ window.ES_Storage = {
         }
     },
     deleteForumPost(postId) { let posts = window.ES_Storage.getForumPosts(); posts = posts.filter(x => x.id !== postId); window.ES_Storage.saveForumPosts(posts); },
-    getNotifications: () => window.ES_Storage._parse("esentry_notifications", [{ id: 1, title: "مرحباً بك في منصة E-SENTRY", time: "الآن", read: false, icon: "shield" }]),
+    getNotifications: () => window.ES_Storage._parse("esentry_notifications", []),
     addNotification(n) { const list = window.ES_Storage.getNotifications(); list.unshift({ id: Date.now(), time: "الآن", read: false, ...n }); window.ES_Storage._set("esentry_notifications", list); }
 };
 

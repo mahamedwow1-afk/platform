@@ -13,7 +13,6 @@
         localStorage.removeItem("esentry_active_user");
         localStorage.removeItem("esentry_role");
         localStorage.removeItem("esentry_user_role");
-        localStorage.removeItem("esentry_stats");
         localStorage.setItem("isLoggedIn", "false");
         
         // إعادة التوجيه الفوري باستخدام replace لضمان عدم الرجوع للخلف لصفحة محمية
@@ -36,6 +35,10 @@
                 const rawStats = localStorage.getItem(statsKey) || localStorage.getItem("esentry_stats");
                 if (rawStats) {
                     const stats = JSON.parse(rawStats);
+                    if (stats.banned === true) {
+                        clearAuthAndRedirect();
+                        return;
+                    }
                     if (stats.isLoggedIn === true) {
                         hasValidStats = true;
                     }
@@ -46,6 +49,10 @@
                 const rawStats = localStorage.getItem("esentry_stats");
                 if (rawStats) {
                     const stats = JSON.parse(rawStats);
+                    if (stats.banned === true) {
+                        clearAuthAndRedirect();
+                        return;
+                    }
                     if (stats.isLoggedIn === true && (stats.email || stats.role)) {
                         hasValidStats = true;
                     }
@@ -67,7 +74,6 @@ function handleLogout() {
     localStorage.removeItem("esentry_active_user");
     localStorage.removeItem("esentry_role");
     localStorage.removeItem("esentry_user_role");
-    localStorage.removeItem("esentry_stats");
     localStorage.setItem("isLoggedIn", "false");
     window.location.replace("login.html");
 }
@@ -328,6 +334,11 @@ function handleLoginSubmit(e) {
         }
     }
 
+    if (stats && stats.banned === true) {
+        showToast("عذراً، هذا الحساب محظور أو تم إلغاء تفعيله من قبل المشرف 🚫", "warning");
+        return;
+    }
+
     if (!valid) {
         showToast("البريد الإلكتروني أو كلمة المرور غير صحيحة", "warning");
         return;
@@ -372,16 +383,20 @@ function handleRegisterSubmit(e) {
     localStorage.setItem("isLoggedIn", "true");
     ES_Storage.setActiveUser(email);
     if (typeof seedUserIfMissing === "function") {
-        seedUserIfMissing(email);
+        seedUserIfMissing(email, true); // Force clean fresh start for newly registered user
     }
 
-    const stats = ES_Storage.getStats() || { ...INITIAL_STATS };
+    const stats = ES_Storage.getStats() || {};
     stats.name = name;
     stats.email = email;
     stats.password = password;
     stats.level = level;
     stats.role = "student";
     stats.avatar = "";
+    stats.averageGrade = 0;
+    stats.studyHours = 0;
+    stats.pendingAssignments = 0;
+    stats.rank = "مبتدئ";
     stats.isLoggedIn = true;
     ES_Storage.saveStats(stats);
     showToast(`تم إنشاء حسابك وتحديث هويتك في المنصة بنجاح 🎉`, "success");

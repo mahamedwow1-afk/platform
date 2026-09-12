@@ -108,6 +108,9 @@
                 <button type="button" onclick="switchAdminTab('lessons')" id="tab-btn-lessons" class="px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-slate-900 text-slate-400 hover:text-slate-100 border border-slate-800">
                     <i class="fas fa-video ml-1.5"></i> إضافة وإدارة المحاضرات
                 </button>
+                <button type="button" onclick="switchAdminTab('builder')" id="tab-btn-builder" class="px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-slate-900 text-slate-400 hover:text-slate-100 border border-slate-800">
+                    <i class="fas fa-laptop-code ml-1.5"></i> إدارة المحتوى الديناميكي (Course Builder)
+                </button>
                 <button type="button" onclick="switchAdminTab('students')" id="tab-btn-students" class="px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-slate-900 text-slate-400 hover:text-slate-100 border border-slate-800">
                     <i class="fas fa-user-gear ml-1.5"></i> إدارة الطلاب والدرجات
                 </button>
@@ -166,20 +169,130 @@
                 </div>
             </div>
 
-            <div id="admin-tab-students" class="hidden space-y-6">
-                <div class="glass-panel p-6 rounded-3xl border border-slate-800 space-y-4">
-                    <h3 class="font-bold text-slate-100 flex items-center gap-2">
-                        <i class="fas fa-magnifying-glass text-cyan-400"></i>
-                        <span>البحث عن طالب برقم الهوية الأكاديمية</span>
+            <div id="admin-tab-builder" class="hidden space-y-6">
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800">
+                    <h3 class="font-bold text-slate-100 mb-1 flex items-center gap-2">
+                        <i class="fas fa-laptop-code text-cyan-400"></i>
+                        <span>إدارة المحتوى الديناميكي (Dynamic Course & Lesson Builder)</span>
                     </h3>
-                    <p class="text-xs text-slate-400">ابحث عن بيانات أي طالب باستخدام الرقم التعريفي (مثل: ES-2026-001) لتعديل درجاته، معدله، أو ساعات تعلمه.</p>
-                    <div class="flex gap-2">
-                        <input type="text" id="student-search" placeholder="أدخل رقم الطالب (مثلاً: ES-2026-001)" class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-100 outline-none focus:border-cyan-500">
-                        <button id="search-btn" class="px-6 py-3 bg-gradient-to-r from-cyan-500 to-teal-600 text-slate-950 rounded-xl text-xs font-bold shadow-lg shadow-cyan-500/20">
-                            بحث
-                        </button>
+                    <p class="text-xs text-slate-400 mb-6">أنشئ وعدل واحذف الكورسات والمحاضرات مباشرة عبر واجهة الإدارة دون الحاجة لتعديل الكود البرمجي يدوياً.</p>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- 1. إدارة الكورسات -->
+                        <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-bold text-slate-200 text-sm flex items-center gap-2">
+                                    <i class="fas fa-book text-emerald-400"></i>
+                                    <span id="course-form-title">إضافة كورس جديد</span>
+                                </h4>
+                                <button type="button" onclick="resetCourseForm()" id="cancel-course-edit" class="hidden text-[10px] text-slate-400 hover:text-rose-400">إلغاء</button>
+                            </div>
+                            <form id="course-builder-form" class="space-y-3">
+                                <input type="hidden" id="edit-course-id" value="">
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-300 mb-1">عنوان الكورس</label>
+                                    <input type="text" id="builder-course-title" placeholder="أمن الشبكات المتقدم" required class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-100 outline-none focus:border-emerald-500">
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <input type="text" id="builder-course-instructor" placeholder="المحاضر" required class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-100 outline-none focus:border-emerald-500">
+                                    <input type="text" id="builder-course-duration" placeholder="المدة (15 ساعة)" required class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-100 outline-none focus:border-emerald-500">
+                                </div>
+                                <div>
+                                    <input type="text" id="builder-course-image" placeholder="رابط صورة الغلاف" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-100 outline-none focus:border-emerald-500 mb-2">
+                                    <textarea id="builder-course-desc" rows="2" placeholder="وصف الكورس..." required class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-100 outline-none focus:border-emerald-500"></textarea>
+                                </div>
+                                <button type="submit" id="course-submit-btn" class="w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl shadow-lg transition-all">
+                                    حفظ الكورس ونشره 🚀
+                                </button>
+                            </form>
+                            <div class="mt-4 pt-4 border-t border-slate-800">
+                                <h5 class="text-xs font-bold text-slate-300 mb-2">الكورسات الحالية</h5>
+                                <div id="admin-courses-list" class="space-y-2 max-h-[160px] overflow-y-auto"></div>
+                            </div>
+                        </div>
+
+                        <!-- 2. إدارة المحاضرات -->
+                        <div id="lesson-builder-section" class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-bold text-slate-200 text-sm flex items-center gap-2">
+                                    <i class="fas fa-video text-cyan-400"></i>
+                                    <span id="lesson-form-title">إضافة أو تعديل محاضرة</span>
+                                </h4>
+                                <button type="button" onclick="resetLessonForm()" id="cancel-lesson-edit" class="hidden text-[10px] text-slate-400 hover:text-rose-400">إلغاء</button>
+                            </div>
+                            <form id="lesson-builder-form" class="space-y-3">
+                                <input type="hidden" id="edit-lesson-id" value="">
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-300 mb-1">الكورس المستهدف</label>
+                                    <select id="builder-lesson-course" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-200 outline-none focus:border-cyan-500"></select>
+                                </div>
+                                <div>
+                                    <input type="text" id="builder-lesson-title" placeholder="عنوان المحاضرة" required class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-100 outline-none focus:border-cyan-500">
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <input type="text" id="builder-lesson-unit" value="المحور الرئيسي" placeholder="المحور" required class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-100 outline-none focus:border-cyan-500">
+                                    <input type="number" id="builder-lesson-duration" value="30" placeholder="المدة (دقائق)" required class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-100 outline-none focus:border-cyan-500">
+                                </div>
+                                <div>
+                                    <input type="text" id="builder-lesson-url" placeholder="رابط يوتيوب" required class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-100 outline-none focus:border-cyan-500">
+                                </div>
+                                <button type="submit" id="lesson-submit-btn" class="w-full py-2.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs rounded-xl shadow-lg transition-all">
+                                    حفظ المحاضرة ونشرها 🚀
+                                </button>
+                            </form>
+                            <div class="mt-4 pt-4 border-t border-slate-800">
+                                <h5 class="text-xs font-bold text-slate-300 mb-2">المحاضرات المسجلة</h5>
+                                <div id="admin-builder-lessons-list" class="space-y-2 max-h-[160px] overflow-y-auto"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div id="student-result" class="mt-4"></div>
+                </div>
+            </div>
+
+            <div id="admin-tab-students" class="hidden space-y-6">
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800 space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <h3 class="font-bold text-slate-100 flex items-center gap-2">
+                                <i class="fas fa-users-gear text-emerald-400"></i>
+                                <span>جدول إدارة المستخدمين والتحكم المتقدم</span>
+                            </h3>
+                            <p class="text-xs text-slate-400 mt-1">عرض جميع الطلاب والمستخدمين المسجلين في المنصة، البحث الفوري، تعديل الحصص والتقدم، وإرسال إشعارات مخصصة.</p>
+                        </div>
+                        <div class="relative w-full sm:w-80">
+                            <i class="fas fa-magnifying-glass absolute right-3.5 top-3.5 text-slate-500 text-xs"></i>
+                            <input type="text" id="live-student-search" placeholder="بحث فوري بالاسم، الإيميل، أو الرقم..." class="w-full bg-slate-950 border border-slate-800 rounded-xl pr-9 pl-4 py-2.5 text-xs text-slate-100 outline-none focus:border-emerald-500">
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="exportToCSV()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition-all border border-slate-700">
+                                <i class="fas fa-file-csv ml-1"></i> CSV
+                            </button>
+                            <button onclick="exportToJSON()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition-all border border-slate-700">
+                                <i class="fas fa-file-code ml-1"></i> JSON
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div id="student-result" class="my-2"></div>
+
+                    <div class="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-950">
+                        <table class="w-full text-right border-collapse">
+                            <thead>
+                                <tr class="border-b border-slate-800 bg-slate-900/60 text-[11px] font-bold text-slate-300">
+                                    <th class="p-4">الطالب / المستخدم</th>
+                                    <th class="p-4">الرقم الأكاديمي</th>
+                                    <th class="p-4">المستوى / الدور</th>
+                                    <th class="p-4">التقدم وحصص التعلم</th>
+                                    <th class="p-4">الحالة</th>
+                                    <th class="p-4">إجراءات التحكم</th>
+                                </tr>
+                            </thead>
+                            <tbody id="students-table-body">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
