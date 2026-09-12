@@ -2,12 +2,26 @@ let currentStudentStats = null;
 let currentStudentKey = null;
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Check if already logged in as admin via LocalStorage
+    const role = localStorage.getItem("esentry_role") || localStorage.getItem("esentry_user_role");
+    if (role === "admin") {
+        const adminLogin = document.getElementById("admin-login");
+        const adminDashboard = document.getElementById("admin-dashboard");
+        if (adminLogin && adminDashboard) {
+            adminLogin.classList.add("hidden");
+            adminDashboard.classList.remove("hidden");
+            initAdminDashboard();
+        }
+    }
+
     const loginForm = document.getElementById("login-form");
     if (loginForm) {
         loginForm.addEventListener("submit", (e) => {
             e.preventDefault();
             const pass = document.getElementById("admin-pass").value;
-            if (pass === "admin123") {
+            if (pass === "admin123" || pass === "esentry_admin") {
+                localStorage.setItem("esentry_role", "admin");
+                localStorage.setItem("esentry_user_role", "admin");
                 document.getElementById("admin-login").classList.add("hidden");
                 document.getElementById("admin-dashboard").classList.remove("hidden");
                 initAdminDashboard();
@@ -265,4 +279,11 @@ function handleBroadcastSubmit(e) {
     localStorage.setItem("esentry_notifications", JSON.stringify(notifs));
     showToast("تم بث التنبيه لجميع الطلاب بنجاح 🚀", "success");
     e.target.reset();
+}
+
+function handleAdminLogout() {
+    localStorage.removeItem("esentry_role");
+    localStorage.removeItem("esentry_user_role");
+    localStorage.removeItem("active_user");
+    window.location.href = "login.html";
 }

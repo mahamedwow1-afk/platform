@@ -52,51 +52,116 @@ document.addEventListener("DOMContentLoaded", () => {
 function renderAuthInterface() {
     const authBox = document.getElementById("auth-box");
     authBox.innerHTML = `
-        <div class="flex items-center p-1 rounded-2xl bg-slate-900 border border-slate-800 mb-6">
-            <button type="button" id="tab-login" onclick="switchAuthTab('login')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-emerald-500 text-slate-950 shadow-md">تسجيل الدخول</button>
-            <button type="button" id="tab-register" onclick="switchAuthTab('register')" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-slate-200">حساب جديد</button>
+        <div class="flex items-center p-1 rounded-2xl bg-slate-950 border border-slate-800 mb-6">
+            <button type="button" id="role-student" onclick="switchAuthRole('student')" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-emerald-500 text-slate-950 shadow-md flex items-center justify-center gap-2 transition-all">
+                <i class="fas fa-user-graduate"></i>
+                <span>حساب طالب</span>
+            </button>
+            <button type="button" id="role-admin" onclick="switchAuthRole('admin')" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-slate-400 hover:text-slate-200 flex items-center justify-center gap-2 transition-all">
+                <i class="fas fa-user-shield"></i>
+                <span>حساب مشرف (Admin)</span>
+            </button>
         </div>
-        ${getLoginFormHtml()}
-        ${getRegisterFormHtml()}
-        <div class="mt-6 pt-5 border-t border-slate-800 text-center">
-            <a href="#" onclick="handleDirectAccess(event)" class="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-emerald-400">
-                <span>المتابعة إلى لوحة التحكم مباشرة</span>
-                <i class="fas fa-arrow-left text-[10px]"></i>
-            </a>
+        <div id="auth-form-container">
+            <div class="flex items-center p-1 rounded-2xl bg-slate-900 border border-slate-800 mb-6">
+                <button type="button" id="tab-login" onclick="switchAuthTab('login')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-emerald-500 text-slate-950 shadow-md">تسجيل الدخول</button>
+                <button type="button" id="tab-register" onclick="switchAuthTab('register')" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-slate-200">حساب جديد</button>
+            </div>
+            ${getLoginFormHtml()}
+            ${getRegisterFormHtml()}
         </div>
     `;
 }
 
-function handleDirectAccess(e) {
-    e.preventDefault();
-    localStorage.setItem("active_user", "mohammed@esentry.edu");
-    localStorage.setItem("esentry_active_user", "mohammed@esentry.edu");
-    try {
-        const raw = localStorage.getItem("esentry_stats_mohammed@esentry.edu") || localStorage.getItem("esentry_stats");
-        const stats = raw ? JSON.parse(raw) : { name: "محمد ياسر محمد", email: "mohammed@esentry.edu", isLoggedIn: true };
-        stats.isLoggedIn = true;
-        localStorage.setItem("esentry_stats_mohammed@esentry.edu", JSON.stringify(stats));
-        localStorage.setItem("esentry_stats", JSON.stringify(stats));
-    } catch (e) {}
-    window.location.href = "index.html";
+function switchAuthRole(role) {
+    const btnStudent = document.getElementById("role-student");
+    const btnAdmin = document.getElementById("role-admin");
+    const container = document.getElementById("auth-form-container");
+    if (!btnStudent || !btnAdmin || !container) return;
+
+    if (role === "student") {
+        btnStudent.className = "flex-1 py-2.5 text-xs font-bold rounded-xl bg-emerald-500 text-slate-950 shadow-md flex items-center justify-center gap-2 transition-all";
+        btnAdmin.className = "flex-1 py-2.5 text-xs font-bold rounded-xl text-slate-400 hover:text-slate-200 flex items-center justify-center gap-2 transition-all";
+        container.innerHTML = `
+            <div class="flex items-center p-1 rounded-2xl bg-slate-900 border border-slate-800 mb-6">
+                <button type="button" id="tab-login" onclick="switchAuthTab('login')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-emerald-500 text-slate-950 shadow-md">تسجيل الدخول</button>
+                <button type="button" id="tab-register" onclick="switchAuthTab('register')" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-slate-200">حساب جديد</button>
+            </div>
+            ${getLoginFormHtml()}
+            ${getRegisterFormHtml()}
+        `;
+        switchAuthTab('login');
+    } else {
+        btnAdmin.className = "flex-1 py-2.5 text-xs font-bold rounded-xl bg-emerald-500 text-slate-950 shadow-md flex items-center justify-center gap-2 transition-all";
+        btnStudent.className = "flex-1 py-2.5 text-xs font-bold rounded-xl text-slate-400 hover:text-slate-200 flex items-center justify-center gap-2 transition-all";
+        container.innerHTML = getAdminLoginFormHtml();
+    }
 }
 
+function getAdminLoginFormHtml() {
+    return `
+        <form id="form-admin-login" onsubmit="handleAdminLoginSubmit(event)" class="space-y-4">
+            <div class="text-center mb-4">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-cyan-500 text-slate-950 font-black shadow-lg shadow-emerald-500/20 mb-2">
+                    <i class="fas fa-user-shield text-xl"></i>
+                </div>
+                <h3 class="text-sm font-black text-slate-100">تسجيل دخول المشرفين الإداري</h3>
+                <p class="text-[11px] text-emerald-400 mt-0.5">أدخل كلمة المرور الإدارية للوصول إلى لوحة التحكم</p>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-300 mb-2">كلمة المرور الإدارية</label>
+                <div class="relative">
+                    <i class="fas fa-key absolute right-3.5 top-3.5 text-slate-500 text-xs"></i>
+                    <input type="password" id="admin-login-pass" required class="w-full bg-slate-900/80 border border-slate-800 rounded-xl pr-9 pl-9 py-2.5 text-xs text-slate-100 outline-none focus:border-emerald-500" placeholder="••••••••" value="">
+                    <button type="button" onclick="togglePasswordVisibility('admin-login-pass', 'admin-login-pass-icon')" class="absolute left-3.5 top-3.5 text-slate-500 hover:text-slate-300 focus:outline-none transition-colors">
+                        <i id="admin-login-pass-icon" class="fas fa-eye text-xs"></i>
+                    </button>
+                </div>
+            </div>
+            <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 text-slate-950 font-bold text-xs shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2">
+                <i class="fas fa-shield-halved text-sm"></i>
+                <span>الدخول إلى لوحة تحكم المشرف</span>
+            </button>
+        </form>
+    `;
+}
+
+function handleAdminLoginSubmit(e) {
+    e.preventDefault();
+    const pass = document.getElementById("admin-login-pass").value;
+    if (pass === "admin123" || pass === "esentry_admin") {
+        localStorage.setItem("esentry_role", "admin");
+        localStorage.setItem("esentry_user_role", "admin");
+        localStorage.setItem("active_user", "admin@esentry.edu");
+        try {
+            const stats = { name: "مشرف النظام", email: "admin@esentry.edu", role: "admin", isLoggedIn: true };
+            localStorage.setItem("esentry_stats_admin@esentry.edu", JSON.stringify(stats));
+            localStorage.setItem("esentry_stats", JSON.stringify(stats));
+        } catch (e) {}
+        showToast("تم التحقق من صلاحيات المشرف بنجاح 🛡️", "success");
+        setTimeout(() => { window.location.href = "admin.html"; }, 700);
+    } else {
+        showToast("كلمة المرور الإدارية غير صحيحة", "warning");
+    }
+}
+
+
+
 function getLoginFormHtml() {
-    const stats = ES_Storage.getStats() || {};
     return `
         <form id="form-login" onsubmit="handleLoginSubmit(event)" class="space-y-4">
             <div>
                 <label class="block text-xs font-bold text-slate-300 mb-2">البريد الإلكتروني</label>
                 <div class="relative">
                     <i class="far fa-envelope absolute right-3.5 top-3.5 text-slate-500 text-xs"></i>
-                    <input type="email" id="login-email" required class="w-full bg-slate-900/80 border border-slate-800 rounded-xl pr-9 pl-3 py-2.5 text-xs text-slate-100 outline-none focus:border-emerald-500" placeholder="student@esentry.edu" value="${stats.email || 'mohammed@esentry.edu'}">
+                    <input type="email" id="login-email" required class="w-full bg-slate-900/80 border border-slate-800 rounded-xl pr-9 pl-3 py-2.5 text-xs text-slate-100 outline-none focus:border-emerald-500" placeholder="student@esentry.edu" value="">
                 </div>
             </div>
             <div>
                 <label class="block text-xs font-bold text-slate-300 mb-2">كلمة المرور</label>
                 <div class="relative">
                     <i class="fas fa-lock absolute right-3.5 top-3.5 text-slate-500 text-xs"></i>
-                    <input type="password" id="login-password" required class="w-full bg-slate-900/80 border border-slate-800 rounded-xl pr-9 pl-9 py-2.5 text-xs text-slate-100 outline-none focus:border-emerald-500" placeholder="••••••••" value="12345678">
+                    <input type="password" id="login-password" required class="w-full bg-slate-900/80 border border-slate-800 rounded-xl pr-9 pl-9 py-2.5 text-xs text-slate-100 outline-none focus:border-emerald-500" placeholder="••••••••" value="">
                     <button type="button" onclick="togglePasswordVisibility('login-password', 'login-pass-icon')" class="absolute left-3.5 top-3.5 text-slate-500 hover:text-slate-300 focus:outline-none transition-colors">
                         <i id="login-pass-icon" class="fas fa-eye text-xs"></i>
                     </button>
@@ -107,7 +172,6 @@ function getLoginFormHtml() {
                     <input type="checkbox" checked class="w-3.5 h-3.5 rounded border-slate-700 bg-slate-800 text-emerald-500">
                     <span>تذكرني على هذا الجهاز</span>
                 </label>
-                <button type="button" onclick="quickFillDemo()" class="text-emerald-400 hover:underline">حساب تجريبي</button>
             </div>
             <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 text-slate-950 font-bold text-xs shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2">
                 <i class="fas fa-right-to-bracket text-sm"></i>
@@ -188,24 +252,58 @@ function selectAvatar(el) {
     selectedAvatarUrl = el.src;
 }
 
-function quickFillDemo() {
-    document.getElementById("login-email").value = "mohammed@esentry.edu";
-    document.getElementById("login-password").value = "12345678";
-    showToast("تم إدراج بيانات الحساب التجريبي", "success");
-}
-
 function handleLoginSubmit(e) {
     e.preventDefault();
     const email = document.getElementById("login-email").value.trim();
-    if (!email) return;
+    const password = document.getElementById("login-password").value;
+    if (!email || !password) {
+        showToast("يرجى إدخال البريد الإلكتروني وكلمة المرور", "warning");
+        return;
+    }
 
+    const statsKey = `esentry_stats_${email}`;
+    let stats = null;
+    let valid = false;
+
+    try {
+        const raw = localStorage.getItem(statsKey) || (email === "mohammed@esentry.edu" ? localStorage.getItem("esentry_stats") : null);
+        if (raw) {
+            stats = JSON.parse(raw);
+        }
+    } catch (err) {}
+
+    if (stats && stats.password) {
+        if (stats.password === password) {
+            valid = true;
+        }
+    } else if (email === "mohammed@esentry.edu" && password === "12345678") {
+        valid = true;
+        stats = stats || { ...INITIAL_STATS, email, password: "12345678" };
+    } else {
+        const globalStats = localStorage.getItem("esentry_stats");
+        if (globalStats) {
+            try {
+                const parsed = JSON.parse(globalStats);
+                if (parsed.email === email && (parsed.password === password || !parsed.password)) {
+                    stats = parsed;
+                    valid = true;
+                }
+            } catch (err) {}
+        }
+    }
+
+    if (!valid) {
+        showToast("البريد الإلكتروني أو كلمة المرور غير صحيحة", "warning");
+        return;
+    }
+
+    localStorage.setItem("esentry_role", "student");
+    localStorage.setItem("esentry_user_role", "student");
     ES_Storage.setActiveUser(email);
     if (typeof seedUserIfMissing === "function") {
         seedUserIfMissing(email);
     }
 
-    const stats = ES_Storage.getStats() || { ...INITIAL_STATS, email };
-    stats.email = email;
     stats.isLoggedIn = true;
     ES_Storage.saveStats(stats);
     showToast(`مرحباً بك مجدداً يا ${stats.name || email}!`, "success");
@@ -232,6 +330,8 @@ function handleRegisterSubmit(e) {
         return;
     }
 
+    localStorage.setItem("esentry_role", "student");
+    localStorage.setItem("esentry_user_role", "student");
     ES_Storage.setActiveUser(email);
     if (typeof seedUserIfMissing === "function") {
         seedUserIfMissing(email);
@@ -242,6 +342,7 @@ function handleRegisterSubmit(e) {
     stats.email = email;
     stats.password = password;
     stats.level = level;
+    stats.role = "student";
     stats.avatar = "";
     stats.isLoggedIn = true;
     ES_Storage.saveStats(stats);

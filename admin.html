@@ -23,7 +23,8 @@
             <div>
                 <label class="block text-xs font-bold text-slate-300 mb-2">كلمة المرور الإدارية</label>
                 <div class="relative">
-                    <input type="password" id="admin-pass" placeholder="أدخل كلمة المرور (افتراضي: admin123)" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 pl-9 py-3 text-xs text-slate-100 outline-none focus:border-emerald-500">
+                    <i class="fas fa-lock absolute right-3.5 top-3.5 text-slate-500 text-xs"></i>
+                    <input type="password" id="admin-pass" placeholder="أدخل كلمة المرور (افتراضي: admin123)" required class="w-full bg-slate-950 border border-slate-800 rounded-xl pr-9 pl-9 py-3 text-xs text-slate-100 outline-none focus:border-emerald-500">
                     <button type="button" onclick="togglePasswordVisibility('admin-pass', 'admin-pass-icon')" class="absolute left-3.5 top-3.5 text-slate-500 hover:text-slate-300 focus:outline-none transition-colors">
                         <i id="admin-pass-icon" class="fas fa-eye text-xs"></i>
                     </button>
@@ -54,7 +55,7 @@
                 <a href="index.html" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 transition-colors">
                     <i class="fas fa-home ml-1"></i> الرئيسية
                 </a>
-                <button type="button" onclick="window.location.reload()" class="px-3.5 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-xs font-bold text-rose-400 transition-colors">
+                <button type="button" onclick="handleAdminLogout()" class="px-3.5 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-xs font-bold text-rose-400 transition-colors">
                     <i class="fas fa-right-from-bracket ml-1"></i> خروج
                 </button>
             </div>
