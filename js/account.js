@@ -4,6 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!document.getElementById("account-root")) return;
     renderAccountPage();
 });
+    const role = localStorage.getItem("esentry_role") || localStorage.getItem("esentry_user_role");
+    const isAdmin = (role === "admin");
+
 
 function renderAccountPage() {
     const root = document.getElementById("account-root");
@@ -29,6 +32,7 @@ function renderAccountPage() {
 }
 
 function getLeftProfileCardHtml(stats) {
+    const isAdmin = (localStorage.getItem("esentry_role") === "admin");
     return `
         <div class="glass-panel rounded-3xl p-6 border border-slate-800 text-center relative overflow-hidden space-y-4">
             <div class="relative inline-block mb-2" id="avatar-container">
@@ -36,11 +40,12 @@ function getLeftProfileCardHtml(stats) {
             </div>
             <div>
                 <h2 class="text-lg font-black text-slate-100">${stats.name}</h2>
-                <span class="text-[10px] text-emerald-400 font-bold mt-1 bg-emerald-950/40 px-3 py-1 rounded-full inline-block">${stats.rank || "متميز"}</span>
+                ${!isAdmin ? `<span class="text-[10px] text-emerald-400 font-bold mt-1 bg-emerald-950/40 px-3 py-1 rounded-full inline-block">${stats.rank || "متميز"}</span>` : ""}
                 <p class="text-xs text-slate-400 mt-2">${stats.level}</p>
                 <p class="text-xs text-slate-500 mt-1">${stats.email}</p>
-                <p class="text-[10px] text-slate-500 mt-1 font-mono">ID: ${stats.studentId || "N/A"}</p>
+                ${!isAdmin ? `<p class="text-[10px] text-slate-500 mt-1 font-mono">ID: ${stats.studentId || "N/A"}</p>` : ""}
             </div>
+            ${!isAdmin ? `
             <div class="grid grid-cols-2 gap-3 pt-4 border-t border-slate-800 text-center">
                 <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
                     <span class="text-[10px] text-slate-400 block">المعدل</span>
@@ -57,6 +62,7 @@ function getLeftProfileCardHtml(stats) {
                     <span>عرض شهادة الإنجاز المعتمدة</span>
                 </button>
             </div>
+            ` : ""}
         </div>
     `;
 }
