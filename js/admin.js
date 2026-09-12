@@ -1,7 +1,25 @@
 let currentStudentStats = null;
 let currentStudentKey = null;
 
+// دالة تحقق صارمة لصلاحيات المشرف
+function enforceAdminAccess() {
+    const role = localStorage.getItem("esentry_role") || localStorage.getItem("esentry_user_role");
+    if (role !== "admin") {
+        localStorage.removeItem("active_user");
+        localStorage.removeItem("esentry_active_user");
+        localStorage.removeItem("esentry_role");
+        localStorage.removeItem("esentry_user_role");
+        localStorage.setItem("isLoggedIn", "false");
+        window.location.replace("login.html");
+        return false;
+    }
+    return true;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+    // استدعاء التحقق الصارم في بداية تشغيل كود الصفحة
+    if (!enforceAdminAccess()) return;
+
     // Check if already logged in as admin via LocalStorage
     const role = localStorage.getItem("esentry_role") || localStorage.getItem("esentry_user_role");
     if (role === "admin") {
