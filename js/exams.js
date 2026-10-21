@@ -4,6 +4,8 @@ let userAnswers = {};
 let timerInterval = null;
 let remainingSeconds = 0;
 let isSubmitted = false;
+let cheatWarnings = 0;
+let antiCheatCleanup = null;
 
 document.addEventListener("DOMContentLoaded", () => {
     if (!document.getElementById("exams-root")) return;
@@ -99,6 +101,7 @@ function startExam(examId) {
     currentQuestionIdx = 0;
     userAnswers = {};
     isSubmitted = false;
+    cheatWarnings = 0;
 
     const titleEl = document.getElementById("exam-active-title");
     const unitEl = document.getElementById("exam-active-unit");
@@ -109,9 +112,12 @@ function startExam(examId) {
     startTimer();
     renderQuestion(0);
     renderQuestionPalette();
+    setupAntiCheat();
 }
-    // Anti-Cheat System Initialization
-    let cheatWarnings = 0;
+
+function setupAntiCheat() {
+    if (antiCheatCleanup) antiCheatCleanup();
+
     const blurHandler = () => {
         if (isSubmitted || !currentExam) return;
         cheatWarnings++;
@@ -122,16 +128,23 @@ function startExam(examId) {
             submitExam();
         }
     };
+    const preventCheat = (e) => e.preventDefault();
+
     window.addEventListener("blur", blurHandler);
     document.addEventListener("visibilitychange", () => {
         if (document.hidden) blurHandler();
     });
-
-    // Prevent copy/context menu
-    const preventCheat = (e) => e.preventDefault();
     document.addEventListener("contextmenu", preventCheat);
     document.addEventListener("copy", preventCheat);
 
+    antiCheatCleanup = () => {
+        window.removeEventListener("blur", blurHandler);
+        document.removeEventListener("visibilitychange", blurHandler);
+        document.removeEventListener("contextmenu", preventCheat);
+        document.removeEventListener("copy", preventCheat);
+        antiCheatCleanup = null;
+    };
+}
 
 function startTimer() {
     if (timerInterval) clearInterval(timerInterval);
@@ -265,6 +278,7 @@ function submitExam() {
     isSubmitted = true;
 
     if (timerInterval) clearInterval(timerInterval);
+    if (antiCheatCleanup) antiCheatCleanup();
 
     let score = 0;
     const total = currentExam.questions.length;
@@ -291,7 +305,7 @@ function submitExam() {
     });
 
     renderExamResults(score, total, percentage, passed);
-    showToast(`تم تصحيح الاختبار فوراً! نتيجتك: ${percentage}%`, passed ? "success" : "warning");
+    showToast(`تم تصحيح الاختبار فوراُ! نتيجتك: ${percentage}%`, passed ? "success" : "warning");
 }
 
 function renderExamResults(score, total, percentage, passed) {
@@ -370,6 +384,7 @@ function renderExamResults(score, total, percentage, passed) {
 
 function backToExamsList() {
     if (timerInterval) clearInterval(timerInterval);
+    if (antiCheatCleanup) antiCheatCleanup();
     currentExam = null;
     renderExamsList();
 }

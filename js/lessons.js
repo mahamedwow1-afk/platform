@@ -185,6 +185,10 @@ function saveLessonNotes() {
 }
 
 function generateCertificate() {
+    if (typeof window.jspdf === "undefined" || !window.jspdf.jsPDF) {
+        console.warn("jsPDF not loaded - skipping certificate generation");
+        return;
+    }
     const { jsPDF } = window.jspdf;
     const stats = ES_Storage.getStats() || {};
     const studentName = stats.name || "الطالب";
@@ -234,6 +238,9 @@ function markLessonComplete() {
     }
 
     showToast("تم تسجيل الحصة كمكتملة", "success");
-    generateCertificate();
+    const stats = ES_Storage.getStats();
+    if (!stats.completedLessons) stats.completedLessons = 0;
+    stats.completedLessons++;
+    ES_Storage.saveStats(stats);
     renderLessonPage();
 }

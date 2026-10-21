@@ -65,7 +65,7 @@ const INITIAL_EXAMS = [
                     "بدون مفتاح",
                     "تشفير أحادي"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 2: التشفير غير المتماثل يعتمد على مفتاحين متكاملين."
             },
             {
@@ -77,7 +77,7 @@ const INITIAL_EXAMS = [
                     "تخزين الملفات",
                     "فحص العتاد"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 3: التصيد ينتحل صفة جهة موثوقة."
             },
             {
@@ -89,7 +89,7 @@ const INITIAL_EXAMS = [
                     "تصفح بريد",
                     "إدارة الطابعات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 4: TLS يشفر الاتصال بين المتصفح والخادم."
             },
             {
@@ -113,7 +113,7 @@ const INITIAL_EXAMS = [
                     "التصميم والبرمجة",
                     "المرونة والاستقرار"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 6: ركائز CIA الثلاثة أساس أمن المعلومات."
             },
             {
@@ -125,7 +125,7 @@ const INITIAL_EXAMS = [
                     "بدون مفتاح",
                     "تشفير أحادي"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 7: التشفير غير المتماثل يعتمد على مفتاحين متكاملين."
             },
             {
@@ -137,7 +137,7 @@ const INITIAL_EXAMS = [
                     "تخزين الملفات",
                     "فحص العتاد"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 8: التصيد ينتحل صفة جهة موثوقة."
             },
             {
@@ -161,7 +161,7 @@ const INITIAL_EXAMS = [
                     "تقليل استهلاك الذاكرة",
                     "إخفاء المجلدات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 10: النسخ الاحتياطي يمنع ضياع البيانات عند الهجمات."
             },
             {
@@ -173,7 +173,7 @@ const INITIAL_EXAMS = [
                     "التصميم والبرمجة",
                     "المرونة والاستقرار"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 11: ركائز CIA الثلاثة أساس أمن المعلومات."
             },
             {
@@ -185,7 +185,7 @@ const INITIAL_EXAMS = [
                     "بدون مفتاح",
                     "تشفير أحادي"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 12: التشفير غير المتماثل يعتمد على مفتاحين متكاملين."
             },
             {
@@ -209,7 +209,7 @@ const INITIAL_EXAMS = [
                     "تصفح بريد",
                     "إدارة الطابعات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 14: TLS يشفر الاتصال بين المتصفح والخادم."
             },
             {
@@ -221,7 +221,7 @@ const INITIAL_EXAMS = [
                     "تقليل استهلاك الذاكرة",
                     "إخفاء المجلدات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 15: النسخ الاحتياطي يمنع ضياع البيانات عند الهجمات."
             },
             {
@@ -233,7 +233,7 @@ const INITIAL_EXAMS = [
                     "التصميم والبرمجة",
                     "المرونة والاستقرار"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 16: ركائز CIA الثلاثة أساس أمن المعلومات."
             },
             {
@@ -257,7 +257,7 @@ const INITIAL_EXAMS = [
                     "تخزين الملفات",
                     "فحص العتاد"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 18: التصيد ينتحل صفة جهة موثوقة."
             },
             {
@@ -269,7 +269,7 @@ const INITIAL_EXAMS = [
                     "تصفح بريد",
                     "إدارة الطابعات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 19: TLS يشفر الاتصال بين المتصفح والخادم."
             },
             {
@@ -281,7 +281,7 @@ const INITIAL_EXAMS = [
                     "تقليل استهلاك الذاكرة",
                     "إخفاء المجلدات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 20: النسخ الاحتياطي يمنع ضياع البيانات عند الهجمات."
             },
             {
@@ -305,7 +305,7 @@ const INITIAL_EXAMS = [
                     "بدون مفتاح",
                     "تشفير أحادي"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 22: التشفير غير المتماثل يعتمد على مفتاحين متكاملين."
             },
             {
@@ -317,7 +317,7 @@ const INITIAL_EXAMS = [
                     "تخزين الملفات",
                     "فحص العتاد"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 23: التصيد ينتحل صفة جهة موثوقة."
             },
             {
@@ -329,7 +329,7 @@ const INITIAL_EXAMS = [
                     "تصفح بريد",
                     "إدارة الطابعات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 24: TLS يشفر الاتصال بين المتصفح والخادم."
             },
             {
@@ -353,7 +353,7 @@ const INITIAL_EXAMS = [
                     "التصميم والبرمجة",
                     "المرونة والاستقرار"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 26: ركائز CIA الثلاثة أساس أمن المعلومات."
             },
             {
@@ -365,7 +365,7 @@ const INITIAL_EXAMS = [
                     "بدون مفتاح",
                     "تشفير أحادي"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 27: التشفير غير المتماثل يعتمد على مفتاحين متكاملين."
             },
             {
@@ -377,7 +377,7 @@ const INITIAL_EXAMS = [
                     "تخزين الملفات",
                     "فحص العتاد"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 28: التصيد ينتحل صفة جهة موثوقة."
             },
             {
@@ -401,7 +401,7 @@ const INITIAL_EXAMS = [
                     "تقليل استهلاك الذاكرة",
                     "إخفاء المجلدات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 30: النسخ الاحتياطي يمنع ضياع البيانات عند الهجمات."
             }
         ]
@@ -422,7 +422,7 @@ const INITIAL_EXAMS = [
                     "التصميم والبرمجة",
                     "المرونة والاستقرار"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 1: ركائز CIA الثلاثة أساس أمن المعلومات."
             },
             {
@@ -434,7 +434,7 @@ const INITIAL_EXAMS = [
                     "بدون مفتاح",
                     "تشفير أحادي"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 2: التشفير غير المتماثل يعتمد على مفتاحين متكاملين."
             },
             {
@@ -458,7 +458,7 @@ const INITIAL_EXAMS = [
                     "تصفح بريد",
                     "إدارة الطابعات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 4: TLS يشفر الاتصال بين المتصفح والخادم."
             },
             {
@@ -470,7 +470,7 @@ const INITIAL_EXAMS = [
                     "تقليل استهلاك الذاكرة",
                     "إخفاء المجلدات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 5: النسخ الاحتياطي يمنع ضياع البيانات عند الهجمات."
             },
             {
@@ -482,7 +482,7 @@ const INITIAL_EXAMS = [
                     "التصميم والبرمجة",
                     "المرونة والاستقرار"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 6: ركائز CIA الثلاثة أساس أمن المعلومات."
             },
             {
@@ -506,7 +506,7 @@ const INITIAL_EXAMS = [
                     "تخزين الملفات",
                     "فحص العتاد"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 8: التصيد ينتحل صفة جهة موثوقة."
             },
             {
@@ -518,7 +518,7 @@ const INITIAL_EXAMS = [
                     "تصفح بريد",
                     "إدارة الطابعات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 9: TLS يشفر الاتصال بين المتصفح والخادم."
             },
             {
@@ -530,7 +530,7 @@ const INITIAL_EXAMS = [
                     "تقليل استهلاك الذاكرة",
                     "إخفاء المجلدات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 10: النسخ الاحتياطي يمنع ضياع البيانات عند الهجمات."
             },
             {
@@ -554,7 +554,7 @@ const INITIAL_EXAMS = [
                     "بدون مفتاح",
                     "تشفير أحادي"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 12: التشفير غير المتماثل يعتمد على مفتاحين متكاملين."
             },
             {
@@ -566,7 +566,7 @@ const INITIAL_EXAMS = [
                     "تخزين الملفات",
                     "فحص العتاد"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 13: التصيد ينتحل صفة جهة موثوقة."
             },
             {
@@ -578,7 +578,7 @@ const INITIAL_EXAMS = [
                     "تصفح بريد",
                     "إدارة الطابعات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 14: TLS يشفر الاتصال بين المتصفح والخادم."
             },
             {
@@ -602,7 +602,7 @@ const INITIAL_EXAMS = [
                     "التصميم والبرمجة",
                     "المرونة والاستقرار"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 16: ركائز CIA الثلاثة أساس أمن المعلومات."
             },
             {
@@ -614,7 +614,7 @@ const INITIAL_EXAMS = [
                     "بدون مفتاح",
                     "تشفير أحادي"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 17: التشفير غير المتماثل يعتمد على مفتاحين متكاملين."
             },
             {
@@ -626,7 +626,7 @@ const INITIAL_EXAMS = [
                     "تخزين الملفات",
                     "فحص العتاد"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 18: التصيد ينتحل صفة جهة موثوقة."
             },
             {
@@ -650,7 +650,7 @@ const INITIAL_EXAMS = [
                     "تقليل استهلاك الذاكرة",
                     "إخفاء المجلدات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 20: النسخ الاحتياطي يمنع ضياع البيانات عند الهجمات."
             },
             {
@@ -662,7 +662,7 @@ const INITIAL_EXAMS = [
                     "التصميم والبرمجة",
                     "المرونة والاستقرار"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 21: ركائز CIA الثلاثة أساس أمن المعلومات."
             },
             {
@@ -674,7 +674,7 @@ const INITIAL_EXAMS = [
                     "بدون مفتاح",
                     "تشفير أحادي"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 22: التشفير غير المتماثل يعتمد على مفتاحين متكاملين."
             },
             {
@@ -698,7 +698,7 @@ const INITIAL_EXAMS = [
                     "تصفح بريد",
                     "إدارة الطابعات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 24: TLS يشفر الاتصال بين المتصفح والخادم."
             },
             {
@@ -710,7 +710,7 @@ const INITIAL_EXAMS = [
                     "تقليل استهلاك الذاكرة",
                     "إخفاء المجلدات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 25: النسخ الاحتياطي يمنع ضياع البيانات عند الهجمات."
             },
             {
@@ -722,7 +722,7 @@ const INITIAL_EXAMS = [
                     "التصميم والبرمجة",
                     "المرونة والاستقرار"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 26: ركائز CIA الثلاثة أساس أمن المعلومات."
             },
             {
@@ -746,7 +746,7 @@ const INITIAL_EXAMS = [
                     "تخزين الملفات",
                     "فحص العتاد"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 28: التصيد ينتحل صفة جهة موثوقة."
             },
             {
@@ -758,7 +758,7 @@ const INITIAL_EXAMS = [
                     "تصفح بريد",
                     "إدارة الطابعات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 29: TLS يشفر الاتصال بين المتصفح والخادم."
             },
             {
@@ -770,7 +770,7 @@ const INITIAL_EXAMS = [
                     "تقليل استهلاك الذاكرة",
                     "إخفاء المجلدات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 30: النسخ الاحتياطي يمنع ضياع البيانات عند الهجمات."
             }
         ]
@@ -803,7 +803,7 @@ const INITIAL_EXAMS = [
                     "بدون مفتاح",
                     "تشفير أحادي"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 2: التشفير غير المتماثل يعتمد على مفتاحين متكاملين."
             },
             {
@@ -815,7 +815,7 @@ const INITIAL_EXAMS = [
                     "تخزين الملفات",
                     "فحص العتاد"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 3: التصيد ينتحل صفة جهة موثوقة."
             },
             {
@@ -827,7 +827,7 @@ const INITIAL_EXAMS = [
                     "تصفح بريد",
                     "إدارة الطابعات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 4: TLS يشفر الاتصال بين المتصفح والخادم."
             },
             {
@@ -851,7 +851,7 @@ const INITIAL_EXAMS = [
                     "التصميم والبرمجة",
                     "المرونة والاستقرار"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 6: ركائز CIA الثلاثة أساس أمن المعلومات."
             },
             {
@@ -863,7 +863,7 @@ const INITIAL_EXAMS = [
                     "بدون مفتاح",
                     "تشفير أحادي"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 7: التشفير غير المتماثل يعتمد على مفتاحين متكاملين."
             },
             {
@@ -875,7 +875,7 @@ const INITIAL_EXAMS = [
                     "تخزين الملفات",
                     "فحص العتاد"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 8: التصيد ينتحل صفة جهة موثوقة."
             },
             {
@@ -899,7 +899,7 @@ const INITIAL_EXAMS = [
                     "تقليل استهلاك الذاكرة",
                     "إخفاء المجلدات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 10: النسخ الاحتياطي يمنع ضياع البيانات عند الهجمات."
             },
             {
@@ -911,7 +911,7 @@ const INITIAL_EXAMS = [
                     "التصميم والبرمجة",
                     "المرونة والاستقرار"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 11: ركائز CIA الثلاثة أساس أمن المعلومات."
             },
             {
@@ -923,7 +923,7 @@ const INITIAL_EXAMS = [
                     "بدون مفتاح",
                     "تشفير أحادي"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 12: التشفير غير المتماثل يعتمد على مفتاحين متكاملين."
             },
             {
@@ -947,7 +947,7 @@ const INITIAL_EXAMS = [
                     "تصفح بريد",
                     "إدارة الطابعات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 14: TLS يشفر الاتصال بين المتصفح والخادم."
             },
             {
@@ -959,7 +959,7 @@ const INITIAL_EXAMS = [
                     "تقليل استهلاك الذاكرة",
                     "إخفاء المجلدات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 15: النسخ الاحتياطي يمنع ضياع البيانات عند الهجمات."
             },
             {
@@ -971,7 +971,7 @@ const INITIAL_EXAMS = [
                     "التصميم والبرمجة",
                     "المرونة والاستقرار"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 16: ركائز CIA الثلاثة أساس أمن المعلومات."
             },
             {
@@ -995,7 +995,7 @@ const INITIAL_EXAMS = [
                     "تخزين الملفات",
                     "فحص العتاد"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 18: التصيد ينتحل صفة جهة موثوقة."
             },
             {
@@ -1007,7 +1007,7 @@ const INITIAL_EXAMS = [
                     "تصفح بريد",
                     "إدارة الطابعات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 19: TLS يشفر الاتصال بين المتصفح والخادم."
             },
             {
@@ -1019,7 +1019,7 @@ const INITIAL_EXAMS = [
                     "تقليل استهلاك الذاكرة",
                     "إخفاء المجلدات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 20: النسخ الاحتياطي يمنع ضياع البيانات عند الهجمات."
             },
             {
@@ -1043,7 +1043,7 @@ const INITIAL_EXAMS = [
                     "بدون مفتاح",
                     "تشفير أحادي"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 22: التشفير غير المتماثل يعتمد على مفتاحين متكاملين."
             },
             {
@@ -1055,7 +1055,7 @@ const INITIAL_EXAMS = [
                     "تخزين الملفات",
                     "فحص العتاد"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 23: التصيد ينتحل صفة جهة موثوقة."
             },
             {
@@ -1067,7 +1067,7 @@ const INITIAL_EXAMS = [
                     "تصفح بريد",
                     "إدارة الطابعات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 24: TLS يشفر الاتصال بين المتصفح والخادم."
             },
             {
@@ -1091,7 +1091,7 @@ const INITIAL_EXAMS = [
                     "التصميم والبرمجة",
                     "المرونة والاستقرار"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 26: ركائز CIA الثلاثة أساس أمن المعلومات."
             },
             {
@@ -1103,7 +1103,7 @@ const INITIAL_EXAMS = [
                     "بدون مفتاح",
                     "تشفير أحادي"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 27: التشفير غير المتماثل يعتمد على مفتاحين متكاملين."
             },
             {
@@ -1115,7 +1115,7 @@ const INITIAL_EXAMS = [
                     "تخزين الملفات",
                     "فحص العتاد"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 28: التصيد ينتحل صفة جهة موثوقة."
             },
             {
@@ -1139,7 +1139,7 @@ const INITIAL_EXAMS = [
                     "تقليل استهلاك الذاكرة",
                     "إخفاء المجلدات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 30: النسخ الاحتياطي يمنع ضياع البيانات عند الهجمات."
             }
         ]
@@ -1160,7 +1160,7 @@ const INITIAL_EXAMS = [
                     "التصميم والبرمجة",
                     "المرونة والاستقرار"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 1: ركائز CIA الثلاثة أساس أمن المعلومات."
             },
             {
@@ -1172,7 +1172,7 @@ const INITIAL_EXAMS = [
                     "بدون مفتاح",
                     "تشفير أحادي"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 2: التشفير غير المتماثل يعتمد على مفتاحين متكاملين."
             },
             {
@@ -1196,7 +1196,7 @@ const INITIAL_EXAMS = [
                     "تصفح بريد",
                     "إدارة الطابعات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 4: TLS يشفر الاتصال بين المتصفح والخادم."
             },
             {
@@ -1208,7 +1208,7 @@ const INITIAL_EXAMS = [
                     "تقليل استهلاك الذاكرة",
                     "إخفاء المجلدات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 5: النسخ الاحتياطي يمنع ضياع البيانات عند الهجمات."
             },
             {
@@ -1220,7 +1220,7 @@ const INITIAL_EXAMS = [
                     "التصميم والبرمجة",
                     "المرونة والاستقرار"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 6: ركائز CIA الثلاثة أساس أمن المعلومات."
             },
             {
@@ -1244,7 +1244,7 @@ const INITIAL_EXAMS = [
                     "تخزين الملفات",
                     "فحص العتاد"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 8: التصيد ينتحل صفة جهة موثوقة."
             },
             {
@@ -1256,7 +1256,7 @@ const INITIAL_EXAMS = [
                     "تصفح بريد",
                     "إدارة الطابعات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 9: TLS يشفر الاتصال بين المتصفح والخادم."
             },
             {
@@ -1268,7 +1268,7 @@ const INITIAL_EXAMS = [
                     "تقليل استهلاك الذاكرة",
                     "إخفاء المجلدات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 10: النسخ الاحتياطي يمنع ضياع البيانات عند الهجمات."
             },
             {
@@ -1292,7 +1292,7 @@ const INITIAL_EXAMS = [
                     "بدون مفتاح",
                     "تشفير أحادي"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 12: التشفير غير المتماثل يعتمد على مفتاحين متكاملين."
             },
             {
@@ -1304,7 +1304,7 @@ const INITIAL_EXAMS = [
                     "تخزين الملفات",
                     "فحص العتاد"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 13: التصيد ينتحل صفة جهة موثوقة."
             },
             {
@@ -1316,7 +1316,7 @@ const INITIAL_EXAMS = [
                     "تصفح بريد",
                     "إدارة الطابعات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 14: TLS يشفر الاتصال بين المتصفح والخادم."
             },
             {
@@ -1340,7 +1340,7 @@ const INITIAL_EXAMS = [
                     "التصميم والبرمجة",
                     "المرونة والاستقرار"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 16: ركائز CIA الثلاثة أساس أمن المعلومات."
             },
             {
@@ -1352,7 +1352,7 @@ const INITIAL_EXAMS = [
                     "بدون مفتاح",
                     "تشفير أحادي"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 17: التشفير غير المتماثل يعتمد على مفتاحين متكاملين."
             },
             {
@@ -1364,7 +1364,7 @@ const INITIAL_EXAMS = [
                     "تخزين الملفات",
                     "فحص العتاد"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 18: التصيد ينتحل صفة جهة موثوقة."
             },
             {
@@ -1388,7 +1388,7 @@ const INITIAL_EXAMS = [
                     "تقليل استهلاك الذاكرة",
                     "إخفاء المجلدات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 20: النسخ الاحتياطي يمنع ضياع البيانات عند الهجمات."
             },
             {
@@ -1400,7 +1400,7 @@ const INITIAL_EXAMS = [
                     "التصميم والبرمجة",
                     "المرونة والاستقرار"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 21: ركائز CIA الثلاثة أساس أمن المعلومات."
             },
             {
@@ -1412,7 +1412,7 @@ const INITIAL_EXAMS = [
                     "بدون مفتاح",
                     "تشفير أحادي"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 22: التشفير غير المتماثل يعتمد على مفتاحين متكاملين."
             },
             {
@@ -1436,7 +1436,7 @@ const INITIAL_EXAMS = [
                     "تصفح بريد",
                     "إدارة الطابعات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 24: TLS يشفر الاتصال بين المتصفح والخادم."
             },
             {
@@ -1448,7 +1448,7 @@ const INITIAL_EXAMS = [
                     "تقليل استهلاك الذاكرة",
                     "إخفاء المجلدات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 25: النسخ الاحتياطي يمنع ضياع البيانات عند الهجمات."
             },
             {
@@ -1460,7 +1460,7 @@ const INITIAL_EXAMS = [
                     "التصميم والبرمجة",
                     "المرونة والاستقرار"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 26: ركائز CIA الثلاثة أساس أمن المعلومات."
             },
             {
@@ -1484,7 +1484,7 @@ const INITIAL_EXAMS = [
                     "تخزين الملفات",
                     "فحص العتاد"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 1,
                 "explanation": "تفسير وتوضيح السؤال رقم 28: التصيد ينتحل صفة جهة موثوقة."
             },
             {
@@ -1496,7 +1496,7 @@ const INITIAL_EXAMS = [
                     "تصفح بريد",
                     "إدارة الطابعات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 2,
                 "explanation": "تفسير وتوضيح السؤال رقم 29: TLS يشفر الاتصال بين المتصفح والخادم."
             },
             {
@@ -1508,7 +1508,7 @@ const INITIAL_EXAMS = [
                     "تقليل استهلاك الذاكرة",
                     "إخفاء المجلدات"
                 ],
-                "correctAnswer": 0,
+                "correctAnswer": 3,
                 "explanation": "تفسير وتوضيح السؤال رقم 30: النسخ الاحتياطي يمنع ضياع البيانات عند الهجمات."
             }
         ]

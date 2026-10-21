@@ -170,7 +170,8 @@ function getAdminLoginFormHtml() {
 function handleAdminLoginSubmit(e) {
     e.preventDefault();
     const pass = document.getElementById("admin-login-pass").value;
-    if (pass === "admin123" || pass === "esentry_admin") {
+    const adminPass = localStorage.getItem("esentry_admin_pass") || "esentry_admin";
+    if (pass === adminPass) {
         localStorage.setItem("esentry_role", "admin");
         localStorage.setItem("esentry_user_role", "admin");
         localStorage.setItem("isLoggedIn", "true");
@@ -318,9 +319,6 @@ function handleLoginSubmit(e) {
         if (stats.password === password) {
             valid = true;
         }
-    } else if (email === "mohammed@esentry.edu" && password === "12345678") {
-        valid = true;
-        stats = stats || { ...INITIAL_STATS, email, password: "12345678" };
     } else {
         const globalStats = localStorage.getItem("esentry_stats");
         if (globalStats) {

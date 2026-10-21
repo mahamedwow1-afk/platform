@@ -43,7 +43,7 @@ function renderForumRoot() {
     
     // Add Admin Dashboard if user is admin
     const stats = ES_Storage.getStats();
-    if (stats && stats.email === "mohammed@esentry.edu") {
+    if (stats && stats.role === "admin") {
         renderAdminDashboard();
     }
 }
@@ -259,6 +259,14 @@ function handleNewAnswerSubmit(e, postId) {
     ES_Storage.addForumAnswer(postId, newAnswer);
     input.value = "";
 
+    showToast("تمت إضافة ردك بنجاح! شكراً لمساعدتك لزملائك 👍", "success");
+    renderQuestionsList();
+
+    // Auto-expand replies area
+    const expandedSec = document.getElementById(`replies-section-${postId}`);
+    if (expandedSec) expandedSec.classList.remove("hidden");
+}
+
 function handleDeletePost(postId) {
     if (confirm("هل أنت متأكد من حذف هذا المنشور؟")) {
         ES_Storage.deleteForumPost(postId);
@@ -267,13 +275,6 @@ function handleDeletePost(postId) {
     }
 }
 
-    showToast("تمت إضافة ردك بنجاح! شكراً لمساعدتك لزملائك 👍", "success");
-    renderQuestionsList();
-    
-    // Auto-expand replies area
-    const expandedSec = document.getElementById(`replies-section-${postId}`);
-    if (expandedSec) expandedSec.classList.remove("hidden");
-}
 function renderAdminDashboard() {
     const root = document.getElementById("forum-root");
     const pendingPosts = ES_Storage.getForumPosts().filter(p => p.status !== 'approved');
@@ -307,7 +308,8 @@ function approvePost(postId) {
     const post = posts.find(p => p.id === postId);
     if (post) {
         post.status = 'approved';
-        localStorage.setItem("esentry_forum_posts_mohammed@esentry.edu", JSON.stringify(posts));
+        const stats = ES_Storage.getStats();
+        localStorage.setItem(`esentry_forum_posts_${stats.email || 'mohammed@esentry.edu'}`, JSON.stringify(posts));
         localStorage.setItem("esentry_forum_posts", JSON.stringify(posts));
         renderForumRoot();
         showToast("تم اعتماد المنشور بنجاح", "success");
@@ -322,38 +324,4 @@ function deletePost(postId) {
     }
 }
 
-function handleDeletePost(postId) {
-    if (confirm("هل أنت متأكد من حذف هذا المنشور؟")) {
-        ES_Storage.deleteForumPost(postId);
-        renderQuestionsList();
-        showToast("تم حذف المنشور بنجاح.", "success");
-    }
-}
 
-function renderAdminDashboard() {
-    const root = document.getElementById("forum-root");
-    if (!root) return;
-    const pendingPosts = ES_Storage.getForumPosts().filter(p => p.status !== 'approved');
-    if (pendingPosts.length === 0) return;
-
-    const div = document.createElement("div");
-    div.className = "mt-8 bg-slate-900 border border-amber-900/50 rounded-xl p-6";
-    div.innerHTML = `
-        <h3 class="text-amber-500 font-bold mb-4">لوحة تحكم المشرف: تعليقات معلقة (${pendingPosts.length})</h3>
-        <div class="space-y-4">
-            ${pendingPosts.map(post => `
-                <div class="p-4 bg-slate-800 rounded-lg flex justify-between items-center">
-                    <div>
-                        <p class="text-sm font-bold text-slate-100">${post.title}</p>
-                        <p class="text-xs text-slate-400">بواسطة: ${post.author}</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="approvePost('${post.id}')" class="px-3 py-1 bg-emerald-600 text-white text-xs rounded">موافقة</button>
-                        <button onclick="deletePost('${post.id}')" class="px-3 py-1 bg-red-600 text-white text-xs rounded">حذف</button>
-                    </div>
-                </div>
-            `).join("")}
-        </div>
-    `;
-    root.appendChild(div);
-}

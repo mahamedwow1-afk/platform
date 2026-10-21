@@ -217,10 +217,49 @@ function renderPendingAssignments() {
         .join("");
 }
 
+function getChartData() {
+    const results = ES_Storage.getResults() || {};
+    const exams = ES_Storage.getExams() || [];
+    const stats = ES_Storage.getStats();
+    const studyHours = Number(stats?.studyHours) || 0;
+
+    let gradeData = [];
+    let hoursData = [];
+
+    if (exams.length > 0) {
+        exams.forEach((exam, i) => {
+            const result = results[exam.id];
+            if (result) {
+                gradeData.push(result.percentage);
+                hoursData.push(Math.round((exam.duration * exam.totalQuestions) / 60 * 10) / 10);
+            } else {
+                gradeData.push(0);
+                hoursData.push(0);
+            }
+        });
+    }
+
+    if (gradeData.length === 0) {
+        gradeData = [0, 0, 0, 0, 0];
+        hoursData = [0, 0, 0, 0, 0];
+    }
+
+    while (gradeData.length < 5) { gradeData.push(0); hoursData.push(0); }
+    gradeData = gradeData.slice(0, 5);
+    hoursData = hoursData.slice(0, 5);
+
+    if (hoursData.reduce((a, b) => a + b, 0) === 0 && studyHours > 0) {
+        hoursData[hoursData.length - 1] = studyHours;
+    }
+
+    return { gradeData, hoursData };
+}
+
 function renderAnalyticsChart() {
     const canvas = document.getElementById("performanceChart");
     if (!canvas || typeof Chart === "undefined") return;
 
+    const { gradeData, hoursData } = getChartData();
     const ctx = canvas.getContext("2d");
     new Chart(ctx, {
         type: "line",
@@ -229,7 +268,7 @@ function renderAnalyticsChart() {
             datasets: [
                 {
                     label: "معدل الدرجات (%)",
-                    data: [82, 88, 85, 92, 95],
+                    data: gradeData,
                     borderColor: "#00f3ff",
                     backgroundColor: "rgba(0, 243, 255, 0.1)",
                     fill: true,
@@ -237,7 +276,7 @@ function renderAnalyticsChart() {
                 },
                 {
                     label: "ساعات التعلم",
-                    data: [5, 8, 12, 10, 15],
+                    data: hoursData,
                     borderColor: "#00ff66",
                     backgroundColor: "rgba(0, 255, 102, 0.1)",
                     fill: true,

@@ -37,7 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
         loginForm.addEventListener("submit", (e) => {
             e.preventDefault();
             const pass = document.getElementById("admin-pass").value;
-            if (pass === "admin123" || pass === "esentry_admin") {
+            const adminPass = localStorage.getItem("esentry_admin_pass") || "esentry_admin";
+            if (pass === adminPass) {
                 localStorage.setItem("esentry_role", "admin");
                 localStorage.setItem("esentry_user_role", "admin");
                 document.getElementById("admin-login").classList.add("hidden");
@@ -183,7 +184,8 @@ function approvePost(id) {
     let posts = JSON.parse(localStorage.getItem("esentry_forum_posts") || "[]");
     posts = posts.map(p => p.id === id ? { ...p, status: 'approved' } : p);
     localStorage.setItem("esentry_forum_posts", JSON.stringify(posts));
-    localStorage.setItem("esentry_forum_posts_mohammed@esentry.edu", JSON.stringify(posts));
+    const _u = localStorage.getItem("active_user") || localStorage.getItem("esentry_active_user") || "default";
+    localStorage.setItem(`esentry_forum_posts_${_u}`, JSON.stringify(posts));
     renderForumPending();
     showToast("تم اعتماد ونشر السؤال في المنتدى بنجاح", "success");
 }
@@ -192,7 +194,7 @@ function rejectPost(id) {
     let posts = JSON.parse(localStorage.getItem("esentry_forum_posts") || "[]");
     posts = posts.filter(p => p.id !== id);
     localStorage.setItem("esentry_forum_posts", JSON.stringify(posts));
-    localStorage.setItem("esentry_forum_posts_mohammed@esentry.edu", JSON.stringify(posts));
+    localStorage.setItem(`esentry_forum_posts_${_u}`, JSON.stringify(posts));
     renderForumPending();
     showToast("تم رفض وحذف المنشور", "warning");
 }
